@@ -132,8 +132,12 @@ const animationTimeline = () => {
     .from(".step-2", 0.7, ideaTextTrans)
     .addPause()
     .to(".step-2", 0.7, ideaTextTransLeave)
-    .to(".step-3", 0.7, ideaTextTrans)
+    .from(".step-3", 0.7, ideaTextTrans)
     .addPause()
+    .to(".step-3", 0.7, ideaTextTransLeave)
+    .from(".step-4", 0.7, ideaTextTrans)
+    .addPause()
+    .to(".step-4", 0.7, ideaTextTransLeave)
     .staggerFromTo(
         ".baloons img",
         2.5,
@@ -232,21 +236,55 @@ const animationTimeline = () => {
     );
         
 
-    tl.seek("25");
+    //tl.seek("25");
     //tl.timeScale(2);
 
     // Restart Animation on click
+    const step2 = document.getElementById("step2");
+    const step3 = document.getElementById("step3");
+    const step4 = document.getElementById("step4");
     const replyBtn = document.getElementById("replay");
+    const replyStep = document.getElementById("replayStep");
+    const code1 = document.getElementById("code1");
+    const code2 = document.getElementById("code2");
+    const code3 = document.getElementById("code3");
+    code1.addEventListener("input", () => {
+        code1Btn.disabled = code1.value !== "var tree = new ChristmasTree()";
+    });
+    code2.addEventListener("input", () => {
+        code2Btn.disabled = code2.value !== "tree.add(new ChristmasLights())";
+    });
+    code3.addEventListener("input", () => {
+        code3Btn.disabled = code3.value !== "tree.on()";
+    });
     replyBtn.addEventListener("click", () => {
         tl.restart();
+        replyStep.style.zIndex = 10;
+        step2.style.zIndex = 16;
+        code1.value = "";
+        code2.value = "";
+        code3.value = "";
+        code1Btn.disabled = true;
+        code2Btn.disabled = true;
+        code3Btn.disabled = true;
     });
-    const code1Btn = document.getElementById("code1Btn");
+    const code1Btn = document.getElementById("codeBtn1");
     code1Btn.addEventListener("click", () => {
         tl.paused(false);
+        step2.style.zIndex = 15;
+        step3.style.zIndex = 16;
     });
-    const code2Btn = document.getElementById("code2Btn");
+    const code2Btn = document.getElementById("codeBtn2");
     code2Btn.addEventListener("click", () => {
         tl.paused(false);
+        step3.style.zIndex = 15;
+        step4.style.zIndex = 16;
+    });
+    const code3Btn = document.getElementById("codeBtn3");
+    code3Btn.addEventListener("click", () => {
+        tl.paused(false);
+        step4.style.zIndex = 15;
+        replyStep.style.zIndex = 16;
     });
 };
 
